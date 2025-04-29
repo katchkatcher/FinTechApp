@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 #include "AssetManager.h"
 #include "PortfolioAnalyzer.h"
@@ -8,13 +8,13 @@
 
 class RiskModeler {
 private:
-	// Ссылки
+	// РЎСЃС‹Р»РєРё
 	AssetManager& assetManager;
 	PortfolioAnalyzer& portfolioAnalyzer;
 	DataConnector& dataConnector;
 	DataManager& dataManager;
 
-	// Данные
+	// Р”Р°РЅРЅС‹Рµ
 	const std::vector<Portfolio>& allPortfolios;
 	const std::vector<Stock>& allStocks;
 	const std::map<std::string, double>& currentPrices;
@@ -28,13 +28,13 @@ private:
 public:
 	RiskModeler(AssetManager& manager, PortfolioAnalyzer& analyzer, DataConnector& connector, DataManager& dmanager);
 	
-	double calculateFuturePrice(std::string assetName);										// Подсчёт будущей цены
-	double calculatePortfolioRisk();														// Подсчёт риска портфеля
-	double calculateFuturePortfolioReturn();												// Подсчёт будущей доходности портфеля
-	double calculateVaR(double confidenceLevel, int daysToForecast, int numSimulations);	// Подсчёт значения под риском
-	void initialize();																		// Инициализация ковариационной матрицы
-	void calculateCovMatrix();																// Подсчёт ковариационной матрицы
-	void calculateLogReturns();																// Подсчёт логарифмической доходности
-	void calculateMeanReturns();															// Подсчёт долей активов
+	double calculateFuturePrice(std::string assetName);										// РџРѕРґСЃС‡С‘С‚ Р±СѓРґСѓС‰РµР№ С†РµРЅС‹
+	double calculatePortfolioRisk();														// РџРѕРґСЃС‡С‘С‚ СЂРёСЃРєР° РїРѕСЂС‚С„РµР»СЏ
+	double calculateFuturePortfolioReturn();												// РџРѕРґСЃС‡С‘С‚ Р±СѓРґСѓС‰РµР№ РґРѕС…РѕРґРЅРѕСЃС‚Рё РїРѕСЂС‚С„РµР»СЏ
+	double calculateVaR(double confidenceLevel, int daysToForecast, int numSimulations);	// РџРѕРґСЃС‡С‘С‚ Р·РЅР°С‡РµРЅРёСЏ РїРѕРґ СЂРёСЃРєРѕРј
+	void initialize();																		// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРІР°СЂРёР°С†РёРѕРЅРЅРѕР№ РјР°С‚СЂРёС†С‹
+	void calculateCovMatrix();																// РџРѕРґСЃС‡С‘С‚ РєРѕРІР°СЂРёР°С†РёРѕРЅРЅРѕР№ РјР°С‚СЂРёС†С‹
+	void calculateLogReturns();																// РџРѕРґСЃС‡С‘С‚ Р»РѕРіР°СЂРёС„РјРёС‡РµСЃРєРѕР№ РґРѕС…РѕРґРЅРѕСЃС‚Рё
+	void calculateMeanReturns();															// РџРѕРґСЃС‡С‘С‚ РґРѕР»РµР№ Р°РєС‚РёРІРѕРІ
 };
 

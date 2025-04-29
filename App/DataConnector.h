@@ -1,25 +1,25 @@
-#pragma once
+п»ї#pragma once
 #include <string>
 #include <vector>
 #include "nlohmann/json.hpp"
 
 struct StockData {
-    std::string timestamp;   // Временная метка
-    double closeprice;       // Цена закрытия
+    std::string timestamp;   // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР°
+    double closeprice;       // Р¦РµРЅР° Р·Р°РєСЂС‹С‚РёСЏ
 };
 
 class DataConnector {
 public:
-    DataConnector(const std::string& userAgent); // Конструктор
+    DataConnector(const std::string& userAgent); // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 
-    std::vector<StockData> fetchHistoricalData(const std::string& symbol, const std::string& interval, const std::string& range);                // Получение данных
-    std::string formatTimestamp(std::time_t timestamp);                                                                                          // Преобразование времени
-    void fetchAndDisplayDataWithRetries(const std::string& symbol, const std::string& interval, const std::string& range, int retryCount);       // Функция для отображения 
+    std::vector<StockData> fetchHistoricalData(const std::string& symbol, const std::string& interval, const std::string& range);                // РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С…
+    std::string formatTimestamp(std::time_t timestamp);                                                                                          // РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РІСЂРµРјРµРЅРё
+    void fetchAndDisplayDataWithRetries(const std::string& symbol, const std::string& interval, const std::string& range, int retryCount);       // Р¤СѓРЅРєС†РёСЏ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ 
 private:
     std::string userAgent; // User-Agent
 
-    static size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* userData);                                               // Функция обработчик
-    std::vector<StockData> parseJsonData(const std::string& jsonData);                                                                           // Парсер json
+    static size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* userData);                                               // Р¤СѓРЅРєС†РёСЏ РѕР±СЂР°Р±РѕС‚С‡РёРє
+    std::vector<StockData> parseJsonData(const std::string& jsonData);                                                                           // РџР°СЂСЃРµСЂ json
 
   
 };

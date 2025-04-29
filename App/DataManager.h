@@ -1,26 +1,26 @@
-#pragma once
+п»ї#pragma once
 
 #include "DataConnector.h"
 #include "AssetManager.h"
 
 class DataManager {
 private:
-	std::vector<Portfolio> allPortfolios;							// Все портфели
-	std::vector<Stock> allStocks;									// Акции из определённого портфеля
-	std::map<std::string, double> currentPrices;					// Акция в портфеле и её текущая цена
-	std::map<std::string, std::vector<double>> historicalPrices;	// Исторические цены всех активов портфеля
+	std::vector<Portfolio> allPortfolios;							// Р’СЃРµ РїРѕСЂС‚С„РµР»Рё
+	std::vector<Stock> allStocks;									// РђРєС†РёРё РёР· РѕРїСЂРµРґРµР»С‘РЅРЅРѕРіРѕ РїРѕСЂС‚С„РµР»СЏ
+	std::map<std::string, double> currentPrices;					// РђРєС†РёСЏ РІ РїРѕСЂС‚С„РµР»Рµ Рё РµС‘ С‚РµРєСѓС‰Р°СЏ С†РµРЅР°
+	std::map<std::string, std::vector<double>> historicalPrices;	// РСЃС‚РѕСЂРёС‡РµСЃРєРёРµ С†РµРЅС‹ РІСЃРµС… Р°РєС‚РёРІРѕРІ РїРѕСЂС‚С„РµР»СЏ
 
-	// Ссылки
+	// РЎСЃС‹Р»РєРё
 	AssetManager& assetManager;
 	DataConnector& dataConnector;
 
 public:
 	DataManager(AssetManager& assetManager, DataConnector& dataConnector);	
 
-	void choosePortfolio();														// Выбор портфеля									
-	const std::vector<Portfolio>& getAllPortfolios();							// Получение всех портфелей
-	const std::vector<Stock>& getAllStocks();									// Получение всех акций
-	const std::map<std::string, double>& getCurrentPrices();					// Получение текущих цен
-	const std::map<std::string, std::vector<double>>& getHistoricalPrices();	// Получение исторических цен
+	void choosePortfolio();														// Р’С‹Р±РѕСЂ РїРѕСЂС‚С„РµР»СЏ									
+	const std::vector<Portfolio>& getAllPortfolios();							// РџРѕР»СѓС‡РµРЅРёРµ РІСЃРµС… РїРѕСЂС‚С„РµР»РµР№
+	const std::vector<Stock>& getAllStocks();									// РџРѕР»СѓС‡РµРЅРёРµ РІСЃРµС… Р°РєС†РёР№
+	const std::map<std::string, double>& getCurrentPrices();					// РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РёС… С†РµРЅ
+	const std::map<std::string, std::vector<double>>& getHistoricalPrices();	// РџРѕР»СѓС‡РµРЅРёРµ РёСЃС‚РѕСЂРёС‡РµСЃРєРёС… С†РµРЅ
 
 };
