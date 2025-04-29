@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,36 +8,36 @@
 
 struct Stock {
 
-	int id;					// id актива
-	std::string ticker;		// название акции
-	double purchasePrice;	// цена покупки
-	int quantity;			// колличество акций
+	int id;					// id Р°РєС‚РёРІР°
+	std::string ticker;		// РЅР°Р·РІР°РЅРёРµ Р°РєС†РёРё
+	double purchasePrice;	// С†РµРЅР° РїРѕРєСѓРїРєРё
+	int quantity;			// РєРѕР»Р»РёС‡РµСЃС‚РІРѕ Р°РєС†РёР№
 
 };
 
 struct Portfolio {
-	int id;					// id портфеля
-	std::string name;		// название портфеля
+	int id;					// id РїРѕСЂС‚С„РµР»СЏ
+	std::string name;		// РЅР°Р·РІР°РЅРёРµ РїРѕСЂС‚С„РµР»СЏ
 };
 
 class AssetManager {
 private:
-	std::string dbPath;		// Название БД
+	std::string dbPath;		// РќР°Р·РІР°РЅРёРµ Р‘Р”
 public:
 	AssetManager(const std::string& databasePath);
 
-	bool createDatabase();			// Создать базу данных
-	bool createPortfolioTable();	// Создать таблицу портфеля
-	bool createStockTable();		// Создать таблицу акций
+	bool createDatabase();			// РЎРѕР·РґР°С‚СЊ Р±Р°Р·Сѓ РґР°РЅРЅС‹С…
+	bool createPortfolioTable();	// РЎРѕР·РґР°С‚СЊ С‚Р°Р±Р»РёС†Сѓ РїРѕСЂС‚С„РµР»СЏ
+	bool createStockTable();		// РЎРѕР·РґР°С‚СЊ С‚Р°Р±Р»РёС†Сѓ Р°РєС†РёР№
 
-	bool addPortfolio(const std::string& portfolioName);											// Добавить портфель
-	bool addStock(int portfolioId, const std::string& ticker, double purchasePrice, int quantity);	// Добавление акции в портфель
-	std::vector<Stock> getStocks(int portfolioId);													// Получение всех акций из портфеля
-	std::vector<Portfolio> getPortfolios();															// Получение списка портфелей
-	bool deleteAssetByName(int portfolioId, const std::string& stockName);							// Удаление актива по его имени
-	bool reindexStocks();																			// Переиндексация активов
-	bool deleteDatabase();																			// Удалить базу данных
+	bool addPortfolio(const std::string& portfolioName);											// Р”РѕР±Р°РІРёС‚СЊ РїРѕСЂС‚С„РµР»СЊ
+	bool addStock(int portfolioId, const std::string& ticker, double purchasePrice, int quantity);	// Р”РѕР±Р°РІР»РµРЅРёРµ Р°РєС†РёРё РІ РїРѕСЂС‚С„РµР»СЊ
+	std::vector<Stock> getStocks(int portfolioId);													// РџРѕР»СѓС‡РµРЅРёРµ РІСЃРµС… Р°РєС†РёР№ РёР· РїРѕСЂС‚С„РµР»СЏ
+	std::vector<Portfolio> getPortfolios();															// РџРѕР»СѓС‡РµРЅРёРµ СЃРїРёСЃРєР° РїРѕСЂС‚С„РµР»РµР№
+	bool deleteAssetByName(int portfolioId, const std::string& stockName);							// РЈРґР°Р»РµРЅРёРµ Р°РєС‚РёРІР° РїРѕ РµРіРѕ РёРјРµРЅРё
+	bool reindexStocks();																			// РџРµСЂРµРёРЅРґРµРєСЃР°С†РёСЏ Р°РєС‚РёРІРѕРІ
+	bool deleteDatabase();																			// РЈРґР°Р»РёС‚СЊ Р±Р°Р·Сѓ РґР°РЅРЅС‹С…
 
-	void displayPortfolios(const std::vector<Portfolio>& portfolios);	// Отобразить портфели
-	void displayStocks(const std::vector<Stock>& stocks);				// Отобразить Акции
+	void displayPortfolios(const std::vector<Portfolio>& portfolios);	// РћС‚РѕР±СЂР°Р·РёС‚СЊ РїРѕСЂС‚С„РµР»Рё
+	void displayStocks(const std::vector<Stock>& stocks);				// РћС‚РѕР±СЂР°Р·РёС‚СЊ РђРєС†РёРё
 };

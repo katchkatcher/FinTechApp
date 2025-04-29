@@ -1,14 +1,14 @@
-#pragma once
+п»ї#pragma once
 #include "DataConnector.h"
 #include "DataManager.h"
 
 class PortfolioAnalyzer {
 private:
-	// Ссылки
+	// РЎСЃС‹Р»РєРё
 	DataManager& dataManager;
 	DataConnector& dataConnector; 
 
-	// Данные
+	// Р”Р°РЅРЅС‹Рµ
 	const std::vector<Stock>& allStocks;
 	const std::vector<Portfolio>& allPortfolios;
 	const std::map<std::string, double>& currentPrices;
@@ -17,12 +17,12 @@ public:
 
 	PortfolioAnalyzer(DataConnector& connector, DataManager& dmanager);
 
-	double calculateTotalValue();														// Подсчёт текущей цены портфеля 
-	double calculateAssetShare(const std::string& assetName);							// Подсчёт доли актива в портфеле
-	double calculatePortfolioReturn();													// Подсчёт доходности портфеля
-	double calculateAssetVolatility(const std::string& assetName);						// Подсчёт волатильности акции
-	double calculatePortfolioVolatility();												// Подсчёт взвешенной волатильности портфеля
-	double calculateAssetReturn(const std::string& assetName);							// Подсчёт доходности акции
-	double calculateCovariance(const std::string& asset1, const std::string& asset2);	// Ковариация
+	double calculateTotalValue();														// РџРѕРґСЃС‡С‘С‚ С‚РµРєСѓС‰РµР№ С†РµРЅС‹ РїРѕСЂС‚С„РµР»СЏ 
+	double calculateAssetShare(const std::string& assetName);							// РџРѕРґСЃС‡С‘С‚ РґРѕР»Рё Р°РєС‚РёРІР° РІ РїРѕСЂС‚С„РµР»Рµ
+	double calculatePortfolioReturn();													// РџРѕРґСЃС‡С‘С‚ РґРѕС…РѕРґРЅРѕСЃС‚Рё РїРѕСЂС‚С„РµР»СЏ
+	double calculateAssetVolatility(const std::string& assetName);						// РџРѕРґСЃС‡С‘С‚ РІРѕР»Р°С‚РёР»СЊРЅРѕСЃС‚Рё Р°РєС†РёРё
+	double calculatePortfolioVolatility();												// РџРѕРґСЃС‡С‘С‚ РІР·РІРµС€РµРЅРЅРѕР№ РІРѕР»Р°С‚РёР»СЊРЅРѕСЃС‚Рё РїРѕСЂС‚С„РµР»СЏ
+	double calculateAssetReturn(const std::string& assetName);							// РџРѕРґСЃС‡С‘С‚ РґРѕС…РѕРґРЅРѕСЃС‚Рё Р°РєС†РёРё
+	double calculateCovariance(const std::string& asset1, const std::string& asset2);	// РљРѕРІР°СЂРёР°С†РёСЏ
 };
 

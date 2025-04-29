@@ -1,9 +1,9 @@
-
+п»ї
 #include "PortfolioAnalyzer.h"
 #include <iostream>
 #include <vector>
 
-// Конструктор
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 PortfolioAnalyzer::PortfolioAnalyzer( DataConnector& connector, DataManager& dmanager) :  
 	dataConnector(connector), 
 	dataManager(dmanager),
@@ -13,7 +13,7 @@ PortfolioAnalyzer::PortfolioAnalyzer( DataConnector& connector, DataManager& dma
 
 }
 
-// Подсчёт общей стоимости портфеля
+// РџРѕРґСЃС‡С‘С‚ РѕР±С‰РµР№ СЃС‚РѕРёРјРѕСЃС‚Рё РїРѕСЂС‚С„РµР»СЏ
 double PortfolioAnalyzer::calculateTotalValue()
 {
 	double totalValue = 0.0;
@@ -29,7 +29,7 @@ double PortfolioAnalyzer::calculateTotalValue()
 	return totalValue;
 } 
 
-// Подсчёт доли портфеля
+// РџРѕРґСЃС‡С‘С‚ РґРѕР»Рё РїРѕСЂС‚С„РµР»СЏ
 double PortfolioAnalyzer::calculateAssetShare(const std::string& assetName)
 {
 
@@ -49,7 +49,7 @@ double PortfolioAnalyzer::calculateAssetShare(const std::string& assetName)
 	return 0.0;
 }
 
-// Подсчёт доходности портфеля
+// РџРѕРґСЃС‡С‘С‚ РґРѕС…РѕРґРЅРѕСЃС‚Рё РїРѕСЂС‚С„РµР»СЏ
 double PortfolioAnalyzer::calculatePortfolioReturn()
 {
 	double currentPortfolioValue = calculateTotalValue();
@@ -67,7 +67,7 @@ double PortfolioAnalyzer::calculatePortfolioReturn()
 	return portfolioReturnValue;
 }
 
-// Волатильность акции в портфеле
+// Р’РѕР»Р°С‚РёР»СЊРЅРѕСЃС‚СЊ Р°РєС†РёРё РІ РїРѕСЂС‚С„РµР»Рµ
 double PortfolioAnalyzer::calculateAssetVolatility(const std::string& assetName)
 {
 	std::vector<StockData> prices;
@@ -96,7 +96,7 @@ double PortfolioAnalyzer::calculateAssetVolatility(const std::string& assetName)
 	return  standartDeviation * std::sqrt(252);
 }
 
-// Волатильность акции в портфеле
+// Р’РѕР»Р°С‚РёР»СЊРЅРѕСЃС‚СЊ Р°РєС†РёРё РІ РїРѕСЂС‚С„РµР»Рµ
 double PortfolioAnalyzer::calculatePortfolioVolatility()
 {
 	double totalValue = calculateTotalValue();
@@ -113,7 +113,7 @@ double PortfolioAnalyzer::calculatePortfolioVolatility()
 	}
 
 	for (size_t i = 0; i < allStocks.size(); ++i) {
-		double weight_i = calculateAssetShare(allStocks[i].ticker); // Доля актива в портфеле
+		double weight_i = calculateAssetShare(allStocks[i].ticker); // Р”РѕР»СЏ Р°РєС‚РёРІР° РІ РїРѕСЂС‚С„РµР»Рµ
 		for (size_t j = 0; j < allStocks.size(); ++j) {
 			double weight_j = calculateAssetShare(allStocks[j].ticker);
 			weightedVariance += weight_i * weight_j * covarianceMatrix[i][j];
@@ -123,7 +123,7 @@ double PortfolioAnalyzer::calculatePortfolioVolatility()
 	return std::sqrt(weightedVariance);
 }
 
-// Доходность актива
+// Р”РѕС…РѕРґРЅРѕСЃС‚СЊ Р°РєС‚РёРІР°
 double PortfolioAnalyzer::calculateAssetReturn(const std::string& assetName)
 {
 	std::vector<StockData> prices;
@@ -147,14 +147,14 @@ double PortfolioAnalyzer::calculateAssetReturn(const std::string& assetName)
 }
 
 //!!!BUG!!!
-// Ковариационная матрица
+// РљРѕРІР°СЂРёР°С†РёРѕРЅРЅР°СЏ РјР°С‚СЂРёС†Р°
 double PortfolioAnalyzer::calculateCovariance(const std::string& asset1, const std::string& asset2)
 {
 	auto prices1 = dataConnector.fetchHistoricalData(asset1, "1d", "1y");
 	auto prices2 = dataConnector.fetchHistoricalData(asset2, "1d", "1y");
 
 	if (prices1.size() != prices2.size() || prices1.empty()) {
-		std::cerr << "Размеры исторических данных для акций " << asset1 << " и " << asset2 << " не совпадают." << std::endl;
+		std::cerr << "Р Р°Р·РјРµСЂС‹ РёСЃС‚РѕСЂРёС‡РµСЃРєРёС… РґР°РЅРЅС‹С… РґР»СЏ Р°РєС†РёР№ " << asset1 << " Рё " << asset2 << " РЅРµ СЃРѕРІРїР°РґР°СЋС‚." << std::endl;
 		return 0.0;
 	}
 

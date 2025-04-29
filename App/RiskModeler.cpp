@@ -1,6 +1,6 @@
-#include "RiskModeler.h"
+п»ї#include "RiskModeler.h"
 
-// Конструктор
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 RiskModeler::RiskModeler(AssetManager& manager, PortfolioAnalyzer& analyzer, DataConnector& connector, DataManager& dmanager) :
 	assetManager(manager),
 	portfolioAnalyzer(analyzer),
@@ -14,7 +14,7 @@ RiskModeler::RiskModeler(AssetManager& manager, PortfolioAnalyzer& analyzer, Dat
 	numAssets = allStocks.size();
 }
 
-// Функция-нициализатор матрицы
+// Р¤СѓРЅРєС†РёСЏ-РЅРёС†РёР°Р»РёР·Р°С‚РѕСЂ РјР°С‚СЂРёС†С‹
 void RiskModeler::initialize()
 {
 	numAssets = allStocks.size();
@@ -24,7 +24,7 @@ void RiskModeler::initialize()
 	calculateCovMatrix();
 }
 
-// Подсчёт ковариационной матрицы
+// РџРѕРґСЃС‡С‘С‚ РєРѕРІР°СЂРёР°С†РёРѕРЅРЅРѕР№ РјР°С‚СЂРёС†С‹
 void RiskModeler::calculateCovMatrix()
 {
 	for (size_t i = 0; i < numAssets; i++) {
@@ -51,7 +51,7 @@ void RiskModeler::calculateCovMatrix()
 	}
 }
 
-// Подсчёт логарифмической доходности
+// РџРѕРґСЃС‡С‘С‚ Р»РѕРіР°СЂРёС„РјРёС‡РµСЃРєРѕР№ РґРѕС…РѕРґРЅРѕСЃС‚Рё
 void RiskModeler::calculateLogReturns()
 {
 	for (auto it = historicalPrices.begin(); it != historicalPrices.end(); ++it) {
@@ -67,7 +67,7 @@ void RiskModeler::calculateLogReturns()
 	}
 }
 
-// Подсчёт долей активов
+// РџРѕРґСЃС‡С‘С‚ РґРѕР»РµР№ Р°РєС‚РёРІРѕРІ
 void RiskModeler::calculateMeanReturns()
 {
 	for (const auto& stock : allStocks) {
@@ -75,7 +75,7 @@ void RiskModeler::calculateMeanReturns()
 	}
 }
 
-// Подсчёт будущей цены портфеля
+// РџРѕРґСЃС‡С‘С‚ Р±СѓРґСѓС‰РµР№ С†РµРЅС‹ РїРѕСЂС‚С„РµР»СЏ
 double RiskModeler::calculateFuturePrice( std::string assetName)
 {
 	double volatility = portfolioAnalyzer.calculateAssetVolatility(assetName);
@@ -101,7 +101,7 @@ double RiskModeler::calculateFuturePrice( std::string assetName)
 	return sum / futurePrices.size();
 }
 
-// Подсчёт риска портфеля
+// РџРѕРґСЃС‡С‘С‚ СЂРёСЃРєР° РїРѕСЂС‚С„РµР»СЏ
 double RiskModeler::calculatePortfolioRisk()
 {
 	if (!initializer) {
@@ -127,14 +127,14 @@ double RiskModeler::calculatePortfolioRisk()
 	return portfolioRisk;
 }
 
-//Подсчёт будущей доходности портфеля
+//РџРѕРґСЃС‡С‘С‚ Р±СѓРґСѓС‰РµР№ РґРѕС…РѕРґРЅРѕСЃС‚Рё РїРѕСЂС‚С„РµР»СЏ
 double RiskModeler::calculateFuturePortfolioReturn()
 {
-	// Параметры моделирования
+	// РџР°СЂР°РјРµС‚СЂС‹ РјРѕРґРµР»РёСЂРѕРІР°РЅРёСЏ
 	int daysToForecast = 252;
 	int numSimulations = 10000;
 
-	// Рассчитываем веса активов в портфеле
+	// Р Р°СЃСЃС‡РёС‚С‹РІР°РµРј РІРµСЃР° Р°РєС‚РёРІРѕРІ РІ РїРѕСЂС‚С„РµР»Рµ
 	std::vector<double> weights;
 	for (const auto& stock : allStocks) {
 		double weight = portfolioAnalyzer.calculateAssetShare(stock.ticker);
@@ -142,7 +142,7 @@ double RiskModeler::calculateFuturePortfolioReturn()
 	}
 	double totalPortfolioValue = portfolioAnalyzer.calculateTotalValue();
 
-	// Моделируем доходность портфеля методом Монте-Карло
+	// РњРѕРґРµР»РёСЂСѓРµРј РґРѕС…РѕРґРЅРѕСЃС‚СЊ РїРѕСЂС‚С„РµР»СЏ РјРµС‚РѕРґРѕРј РњРѕРЅС‚Рµ-РљР°СЂР»Рѕ
 	std::vector<double> simulatedReturns;
 	std::default_random_engine generator;
 	std::normal_distribution<double> distribution(0.0, 1.0);
@@ -162,24 +162,24 @@ double RiskModeler::calculateFuturePortfolioReturn()
 			simulatedPrices[i] = futurePrice;
 		}
 
-		// Рассчитываем стоимость портфеля в конце периода
+		// Р Р°СЃСЃС‡РёС‚С‹РІР°РµРј СЃС‚РѕРёРјРѕСЃС‚СЊ РїРѕСЂС‚С„РµР»СЏ РІ РєРѕРЅС†Рµ РїРµСЂРёРѕРґР°
 		double futurePortfolioValue = 0.0;
 		for (size_t i = 0; i < numAssets; i++) {
 			futurePortfolioValue += simulatedPrices[i] * weights[i];
 		}
 
-		// Вычисляем доходность портфеля
+		// Р’С‹С‡РёСЃР»СЏРµРј РґРѕС…РѕРґРЅРѕСЃС‚СЊ РїРѕСЂС‚С„РµР»СЏ
 		double portfolioReturn = (futurePortfolioValue - totalPortfolioValue) / totalPortfolioValue;
 		simulatedReturns.push_back(portfolioReturn);
 	}
 
-	// Средняя доходность портфеля
+	// РЎСЂРµРґРЅСЏСЏ РґРѕС…РѕРґРЅРѕСЃС‚СЊ РїРѕСЂС‚С„РµР»СЏ
 	double avgReturn = std::accumulate(simulatedReturns.begin(), simulatedReturns.end(), 0.0) / simulatedReturns.size();
 	return avgReturn;
 
 }
 
-// VaR методом Монте-Карло
+// VaR РјРµС‚РѕРґРѕРј РњРѕРЅС‚Рµ-РљР°СЂР»Рѕ
 double RiskModeler::calculateVaR(double confidenceLevel, int daysToForecast, int numSimulations)
 {
 	std::vector<double> simulatedReturns;
@@ -190,14 +190,14 @@ double RiskModeler::calculateVaR(double confidenceLevel, int daysToForecast, int
 
 	double totalPortfolioValue = portfolioAnalyzer.calculateTotalValue();
 
-	// Получаем веса активов
+	// РџРѕР»СѓС‡Р°РµРј РІРµСЃР° Р°РєС‚РёРІРѕРІ
 	std::vector<double> weights;
 	for (const auto& stock : allStocks) {
 		double weight = portfolioAnalyzer.calculateAssetShare(stock.ticker);
 		weights.push_back(weight);
 	}
 
-	// Запуск Монте-Карло симуляций
+	// Р—Р°РїСѓСЃРє РњРѕРЅС‚Рµ-РљР°СЂР»Рѕ СЃРёРјСѓР»СЏС†РёР№
 	for (int sim = 0; sim < numSimulations; sim++) {
 		std::vector<double> simulatedPrices(numAssets, 0.0);
 
@@ -213,25 +213,25 @@ double RiskModeler::calculateVaR(double confidenceLevel, int daysToForecast, int
 			simulatedPrices[i] = futurePrice;
 		}
 
-		// Рассчитываем стоимость портфеля в конце периода
+		// Р Р°СЃСЃС‡РёС‚С‹РІР°РµРј СЃС‚РѕРёРјРѕСЃС‚СЊ РїРѕСЂС‚С„РµР»СЏ РІ РєРѕРЅС†Рµ РїРµСЂРёРѕРґР°
 		double futurePortfolioValue = 0.0;
 		for (size_t i = 0; i < numAssets; i++) {
 			futurePortfolioValue += simulatedPrices[i] * weights[i];
 		}
 
-		// Вычисляем доходность портфеля
+		// Р’С‹С‡РёСЃР»СЏРµРј РґРѕС…РѕРґРЅРѕСЃС‚СЊ РїРѕСЂС‚С„РµР»СЏ
 		double portfolioReturn = (futurePortfolioValue - totalPortfolioValue) / totalPortfolioValue;
 
 		simulatedReturns.push_back(portfolioReturn);
 	}
 
-	// Сортируем результаты симуляций
+	// РЎРѕСЂС‚РёСЂСѓРµРј СЂРµР·СѓР»СЊС‚Р°С‚С‹ СЃРёРјСѓР»СЏС†РёР№
 	std::sort(simulatedReturns.begin(), simulatedReturns.end());
 
-	// Определяем индекс для доверительного уровня
+	// РћРїСЂРµРґРµР»СЏРµРј РёРЅРґРµРєСЃ РґР»СЏ РґРѕРІРµСЂРёС‚РµР»СЊРЅРѕРіРѕ СѓСЂРѕРІРЅСЏ
 	size_t varIndex = static_cast<size_t>((1.0 - confidenceLevel) * numSimulations);
 
-	// Получаем VaR как отрицательную величину (потери)
+	// РџРѕР»СѓС‡Р°РµРј VaR РєР°Рє РѕС‚СЂРёС†Р°С‚РµР»СЊРЅСѓСЋ РІРµР»РёС‡РёРЅСѓ (РїРѕС‚РµСЂРё)
 	double VaR = -simulatedReturns[varIndex] * totalPortfolioValue;
 	return VaR;
 }

@@ -1,93 +1,93 @@
-#include "AssetManager.h"
+п»ї#include "AssetManager.h"
 #include "DataConnector.h"
 #include "PortfolioAnalyzer.h"
 #include "DataManager.h"
 #include "RiskModeler.h"
 #include <iostream>
 
-// Отображение основного меню
+// РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РѕСЃРЅРѕРІРЅРѕРіРѕ РјРµРЅСЋ
 void displayMenu() {
 
 	std::cout << "**************************************************************\n";
-	std::cout << "*               Программа управления портфелем               *\n";
+	std::cout << "*               РџСЂРѕРіСЂР°РјРјР° СѓРїСЂР°РІР»РµРЅРёСЏ РїРѕСЂС‚С„РµР»РµРј               *\n";
 	std::cout << "**************************************************************\n";
-	std::cout << "*  1. Создать портфель и добавить акции                      *\n";
-	std::cout << "*  2. Выбор портфеля для анализа и моделирования рисков      *\n";
-	std::cout << "*  3. Анализ портфеля                                        *\n";
-	std::cout << "*  4. Моделирование рисков и прогнозов                       *\n";
-	std::cout << "*  0. Выход                                                  *\n";
+	std::cout << "*  1. РЎРѕР·РґР°С‚СЊ РїРѕСЂС‚С„РµР»СЊ Рё РґРѕР±Р°РІРёС‚СЊ Р°РєС†РёРё                      *\n";
+	std::cout << "*  2. Р’С‹Р±РѕСЂ РїРѕСЂС‚С„РµР»СЏ РґР»СЏ Р°РЅР°Р»РёР·Р° Рё РјРѕРґРµР»РёСЂРѕРІР°РЅРёСЏ СЂРёСЃРєРѕРІ      *\n";
+	std::cout << "*  3. РђРЅР°Р»РёР· РїРѕСЂС‚С„РµР»СЏ                                        *\n";
+	std::cout << "*  4. РњРѕРґРµР»РёСЂРѕРІР°РЅРёРµ СЂРёСЃРєРѕРІ Рё РїСЂРѕРіРЅРѕР·РѕРІ                       *\n";
+	std::cout << "*  0. Р’С‹С…РѕРґ                                                  *\n";
 	std::cout << "**************************************************************\n";
-	std::cout << "Введите номер команды:  ";
+	std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РєРѕРјР°РЅРґС‹:  ";
 
 }
 
-// Отображение меню AssetManager
+// РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РјРµРЅСЋ AssetManager
 void displayAssetManagerMenu() {
 
-	std::cout << "------------ Создание портфеля -----------\n";
-	std::cout << "  1. Создать базу данных\n";
-	std::cout << "  2. Создать таблицы активов и портфелей\n";
-	std::cout << "  3. Добавить портфель.\n";
-	std::cout << "  4. Добавить акцию в портфель.\n";
-	std::cout << "  5. Удалить акцию.\n";
-	std::cout << "  6. Отобразить существующие портфели.\n";
-	std::cout << "  7. Отобразить акции в портфеле.\n";
-	std::cout << "  8. Удалить базу данных\n";
-	std::cout << "  0. Выход из меню.\n";
+	std::cout << "------------ РЎРѕР·РґР°РЅРёРµ РїРѕСЂС‚С„РµР»СЏ -----------\n";
+	std::cout << "  1. РЎРѕР·РґР°С‚СЊ Р±Р°Р·Сѓ РґР°РЅРЅС‹С…\n";
+	std::cout << "  2. РЎРѕР·РґР°С‚СЊ С‚Р°Р±Р»РёС†С‹ Р°РєС‚РёРІРѕРІ Рё РїРѕСЂС‚С„РµР»РµР№\n";
+	std::cout << "  3. Р”РѕР±Р°РІРёС‚СЊ РїРѕСЂС‚С„РµР»СЊ.\n";
+	std::cout << "  4. Р”РѕР±Р°РІРёС‚СЊ Р°РєС†РёСЋ РІ РїРѕСЂС‚С„РµР»СЊ.\n";
+	std::cout << "  5. РЈРґР°Р»РёС‚СЊ Р°РєС†РёСЋ.\n";
+	std::cout << "  6. РћС‚РѕР±СЂР°Р·РёС‚СЊ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРµ РїРѕСЂС‚С„РµР»Рё.\n";
+	std::cout << "  7. РћС‚РѕР±СЂР°Р·РёС‚СЊ Р°РєС†РёРё РІ РїРѕСЂС‚С„РµР»Рµ.\n";
+	std::cout << "  8. РЈРґР°Р»РёС‚СЊ Р±Р°Р·Сѓ РґР°РЅРЅС‹С…\n";
+	std::cout << "  0. Р’С‹С…РѕРґ РёР· РјРµРЅСЋ.\n";
 	std::cout << "------------------------------------------\n";
-	std::cout << "Ваш выбор: ";
+	std::cout << "Р’Р°С€ РІС‹Р±РѕСЂ: ";
 
 }
 
 void displayDataManagerMenu() {
 
-	std::cout << "------------ Выбор портфеля для анализа -----------\n";
-	std::cout << "  1. Вырать портфель.\n";
-	std::cout << "  0. Выход из меню.\n";
+	std::cout << "------------ Р’С‹Р±РѕСЂ РїРѕСЂС‚С„РµР»СЏ РґР»СЏ Р°РЅР°Р»РёР·Р° -----------\n";
+	std::cout << "  1. Р’С‹СЂР°С‚СЊ РїРѕСЂС‚С„РµР»СЊ.\n";
+	std::cout << "  0. Р’С‹С…РѕРґ РёР· РјРµРЅСЋ.\n";
 	std::cout << "------------------------------------------\n";
-	std::cout << "Ваш выбор: ";
+	std::cout << "Р’Р°С€ РІС‹Р±РѕСЂ: ";
 
 }
 
 void displayPrtfolioAnalyzerMenu() {
 
-	std::cout << "------------ Анализ портфеля -----------\n";
-	std::cout << "  1. Подсчёт общей стоимости портфеля\n";
-	std::cout << "  2. Подсчёт доли актива в портфеле\n";
-	std::cout << "  3. Подсчёт доходности портфеля\n";
-	std::cout << "  4. Подсчёт волатильности актива\n";
-	std::cout << "  5. Подсчёт взвешенной волатильности портфеля\n";
-	std::cout << "  6. Подсчёт доходности актива\n";
-	std::cout << "  0. Выход из меню.\n";
+	std::cout << "------------ РђРЅР°Р»РёР· РїРѕСЂС‚С„РµР»СЏ -----------\n";
+	std::cout << "  1. РџРѕРґСЃС‡С‘С‚ РѕР±С‰РµР№ СЃС‚РѕРёРјРѕСЃС‚Рё РїРѕСЂС‚С„РµР»СЏ\n";
+	std::cout << "  2. РџРѕРґСЃС‡С‘С‚ РґРѕР»Рё Р°РєС‚РёРІР° РІ РїРѕСЂС‚С„РµР»Рµ\n";
+	std::cout << "  3. РџРѕРґСЃС‡С‘С‚ РґРѕС…РѕРґРЅРѕСЃС‚Рё РїРѕСЂС‚С„РµР»СЏ\n";
+	std::cout << "  4. РџРѕРґСЃС‡С‘С‚ РІРѕР»Р°С‚РёР»СЊРЅРѕСЃС‚Рё Р°РєС‚РёРІР°\n";
+	std::cout << "  5. РџРѕРґСЃС‡С‘С‚ РІР·РІРµС€РµРЅРЅРѕР№ РІРѕР»Р°С‚РёР»СЊРЅРѕСЃС‚Рё РїРѕСЂС‚С„РµР»СЏ\n";
+	std::cout << "  6. РџРѕРґСЃС‡С‘С‚ РґРѕС…РѕРґРЅРѕСЃС‚Рё Р°РєС‚РёРІР°\n";
+	std::cout << "  0. Р’С‹С…РѕРґ РёР· РјРµРЅСЋ.\n";
 	std::cout << "------------------------------------------\n";
-	std::cout << "Ваш выбор: ";
+	std::cout << "Р’Р°С€ РІС‹Р±РѕСЂ: ";
 
 }
 
-// Отображение меню RiskModeler
+// РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РјРµРЅСЋ RiskModeler
 void displayRiskModelerMenu() {
 
-	std::cout << "------------ Моделирование Рисков -----------\n";
-	std::cout << "  1. Подсчёт будущей цены акции\n";
-	std::cout << "  2. Подсчёт риска портфеля\n";
-	std::cout << "  3. Подсчёт будущей доходности портфеля портфеля\n";
-	std::cout << "  4. Подсчёт VaR портфеля\n";
-	std::cout << "  0. Выход из меню.\n";
+	std::cout << "------------ РњРѕРґРµР»РёСЂРѕРІР°РЅРёРµ Р РёСЃРєРѕРІ -----------\n";
+	std::cout << "  1. РџРѕРґСЃС‡С‘С‚ Р±СѓРґСѓС‰РµР№ С†РµРЅС‹ Р°РєС†РёРё\n";
+	std::cout << "  2. РџРѕРґСЃС‡С‘С‚ СЂРёСЃРєР° РїРѕСЂС‚С„РµР»СЏ\n";
+	std::cout << "  3. РџРѕРґСЃС‡С‘С‚ Р±СѓРґСѓС‰РµР№ РґРѕС…РѕРґРЅРѕСЃС‚Рё РїРѕСЂС‚С„РµР»СЏ РїРѕСЂС‚С„РµР»СЏ\n";
+	std::cout << "  4. РџРѕРґСЃС‡С‘С‚ VaR РїРѕСЂС‚С„РµР»СЏ\n";
+	std::cout << "  0. Р’С‹С…РѕРґ РёР· РјРµРЅСЋ.\n";
 	std::cout << "------------------------------------------\n";
-	std::cout << "Ваш выбор: ";
+	std::cout << "Р’Р°С€ РІС‹Р±РѕСЂ: ";
 
 }
 
-// Функция добавления акции
+// Р¤СѓРЅРєС†РёСЏ РґРѕР±Р°РІР»РµРЅРёСЏ Р°РєС†РёРё
 bool addAsset(AssetManager& manager, DataConnector& connector) {
 
-	std::cout << "Введите id портфеля, в который хотите "
-		<< "добавить акцию(если существует только один портфель, введите 1): ";
+	std::cout << "Р’РІРµРґРёС‚Рµ id РїРѕСЂС‚С„РµР»СЏ, РІ РєРѕС‚РѕСЂС‹Р№ С…РѕС‚РёС‚Рµ "
+		<< "РґРѕР±Р°РІРёС‚СЊ Р°РєС†РёСЋ(РµСЃР»Рё СЃСѓС‰РµСЃС‚РІСѓРµС‚ С‚РѕР»СЊРєРѕ РѕРґРёРЅ РїРѕСЂС‚С„РµР»СЊ, РІРІРµРґРёС‚Рµ 1): ";
 
 	int portfolioId;
 	std::cin >> portfolioId;
 
-	std::cout << "Введите название акции, которую хотите добавить в портфель: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ Р°РєС†РёРё, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РґРѕР±Р°РІРёС‚СЊ РІ РїРѕСЂС‚С„РµР»СЊ: ";
 
 	std::string ticker;
 	std::cin >> ticker;
@@ -95,7 +95,7 @@ bool addAsset(AssetManager& manager, DataConnector& connector) {
 	auto data = connector.fetchHistoricalData(ticker, "1d", "2d");
 	double purchasePrise = data[data.size() - 1].closeprice;
 
-	std::cout << "Введите колличество акций для добавления: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»Р»РёС‡РµСЃС‚РІРѕ Р°РєС†РёР№ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ: ";
 	int quantity;
 	std::cin >> quantity;
 
@@ -105,7 +105,7 @@ bool addAsset(AssetManager& manager, DataConnector& connector) {
 
 }
 
-// Создание портфеля
+// РЎРѕР·РґР°РЅРёРµ РїРѕСЂС‚С„РµР»СЏ
 int assetManager(AssetManager& manager, DataConnector& connector) {
 	while (true) {
 		int choiseAssetManagerFunc;
@@ -116,52 +116,52 @@ int assetManager(AssetManager& manager, DataConnector& connector) {
 		case 1:
 		{
 			if (manager.createDatabase()) {
-				std::cout << "База данных успешно создана.\n";
+				std::cout << "Р‘Р°Р·Р° РґР°РЅРЅС‹С… СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅР°.\n";
 			}
 			break;
 		}
 		case 2:
 		{
 			if (manager.createPortfolioTable() && manager.createStockTable()) {
-				std::cout << "Таблица успешно создана.\n";
+				std::cout << "РўР°Р±Р»РёС†Р° СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅР°.\n";
 			}
 			break;
 		}
 		case 3:
 		{
-			std::cout << "Введите имя портфеля: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ РїРѕСЂС‚С„РµР»СЏ: ";
 
 			std::string portfolioName;
 			std::cin >> portfolioName;
 
 			if (manager.addPortfolio(portfolioName)) {
-				std::cout << "Портфель " << portfolioName << " успешно добавлен\n";
+				std::cout << "РџРѕСЂС‚С„РµР»СЊ " << portfolioName << " СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ\n";
 			}
 			break;
 		}
 		case 4:
 		{
 			if (addAsset(manager, connector)) {
-				std::cout << "Акция успешно добавлена!\n";
+				std::cout << "РђРєС†РёСЏ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅР°!\n";
 			}
 			break;
 		}
 		case 5:
 		{
 			std::string assetName;
-			std::cout << "Введите тикер актива для удаления: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ С‚РёРєРµСЂ Р°РєС‚РёРІР° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ: ";
 			std::cin >> assetName;
 
 			int portfolioId;
-			std::cout << "Введите Id портфеля для удаления акции из него: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ Id РїРѕСЂС‚С„РµР»СЏ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ Р°РєС†РёРё РёР· РЅРµРіРѕ: ";
 			std::cin >> portfolioId;
 
 
 			if (manager.deleteAssetByName(portfolioId, assetName)) {
-				std::cout << "Удаление прошло успешно\n";
+				std::cout << "РЈРґР°Р»РµРЅРёРµ РїСЂРѕС€Р»Рѕ СѓСЃРїРµС€РЅРѕ\n";
 			}
 			else {
-				std::cout << "Удалить не удалось\n";
+				std::cout << "РЈРґР°Р»РёС‚СЊ РЅРµ СѓРґР°Р»РѕСЃСЊ\n";
 			}
 			manager.reindexStocks();
 			break;
@@ -174,7 +174,7 @@ int assetManager(AssetManager& manager, DataConnector& connector) {
 		}
 		case 7:
 		{
-			std::cout << "Введите id портфеля: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ id РїРѕСЂС‚С„РµР»СЏ: ";
 
 			int id;
 			std::cin >> id;
@@ -186,18 +186,18 @@ int assetManager(AssetManager& manager, DataConnector& connector) {
 		}
 		case 8:
 		{
-			std::cout << "Удаление базы данных.\n";
+			std::cout << "РЈРґР°Р»РµРЅРёРµ Р±Р°Р·С‹ РґР°РЅРЅС‹С….\n";
 			manager.deleteDatabase();
 			break;
 		}
 		case 0:
 		{
-			std::cout << "Выход из программы.\n";
+			std::cout << "Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹.\n";
 			return 0;
 		}
 		default:
 		{
-			std::cout << "Вы ввели некорректное значение, попробуйте снова.\n";
+			std::cout << "Р’С‹ РІРІРµР»Рё РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ, РїРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.\n";
 			break;
 		}
 		}
@@ -206,7 +206,7 @@ int assetManager(AssetManager& manager, DataConnector& connector) {
 	return 0;
 }
 
-// Выбор портфеля для анализа
+// Р’С‹Р±РѕСЂ РїРѕСЂС‚С„РµР»СЏ РґР»СЏ Р°РЅР°Р»РёР·Р°
 int dataManager(DataManager& dmanager) {
 	while (true) {
 		int choosePortfolio;
@@ -221,12 +221,12 @@ int dataManager(DataManager& dmanager) {
 		}
 		case 0:
 		{
-			std::cout << "Выход из программы.\n";
+			std::cout << "Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹.\n";
 			return 0;
 		}
 		default:
 		{
-			std::cout << "Вы ввели некорректное значение, попробуйте снова.\n";
+			std::cout << "Р’С‹ РІРІРµР»Рё РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ, РїРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.\n";
 			break;
 		}
 		}
@@ -234,7 +234,7 @@ int dataManager(DataManager& dmanager) {
 	return 0;
 }
 
-// Анализ портфеля
+// РђРЅР°Р»РёР· РїРѕСЂС‚С„РµР»СЏ
 int portfolioAnalyzer(DataConnector& connector, PortfolioAnalyzer& analyzer) {
 	while (true) {
 		int choisePortfolioAnalyzerFunction;
@@ -247,24 +247,24 @@ int portfolioAnalyzer(DataConnector& connector, PortfolioAnalyzer& analyzer) {
 		case 1:
 		{
 			const auto portfolioPrice = analyzer.calculateTotalValue();
-			std::cout << "Текущая стоимость выбранного портфеля: " << portfolioPrice << "$" << "\n";
+			std::cout << "РўРµРєСѓС‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїРѕСЂС‚С„РµР»СЏ: " << portfolioPrice << "$" << "\n";
 			break;
 		}
 		case 2:
 		{
-			std::cout << "Введите имя акции, для которой вы хотите подсчитать долю: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ Р°РєС†РёРё, РґР»СЏ РєРѕС‚РѕСЂРѕР№ РІС‹ С…РѕС‚РёС‚Рµ РїРѕРґСЃС‡РёС‚Р°С‚СЊ РґРѕР»СЋ: ";
 			
 			std::string stockName;
 			std::cin >> stockName;
 
 			double assetShare = analyzer.calculateAssetShare(stockName);
 
-			std::cout << "Доля акции в портфеле: " << assetShare * 100 << "%\n";
+			std::cout << "Р”РѕР»СЏ Р°РєС†РёРё РІ РїРѕСЂС‚С„РµР»Рµ: " << assetShare * 100 << "%\n";
 			break;
 		}
 		case 3:
 		{
-			std::cout << "Доходность выбранного портфеля: ";
+			std::cout << "Р”РѕС…РѕРґРЅРѕСЃС‚СЊ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїРѕСЂС‚С„РµР»СЏ: ";
 			double portfolioReturn = analyzer.calculatePortfolioReturn();
 			std::cout << portfolioReturn << "%\n";
 			break;
@@ -272,11 +272,11 @@ int portfolioAnalyzer(DataConnector& connector, PortfolioAnalyzer& analyzer) {
 		case 4:
 		{
 			std::string stockName;
-			std::cout << "Введите имя акции, для которой нужно подсчитать волатильность: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ Р°РєС†РёРё, РґР»СЏ РєРѕС‚РѕСЂРѕР№ РЅСѓР¶РЅРѕ РїРѕРґСЃС‡РёС‚Р°С‚СЊ РІРѕР»Р°С‚РёР»СЊРЅРѕСЃС‚СЊ: ";
 			std::cin >> stockName;
 
 			double variance = analyzer.calculateAssetVolatility(stockName) * 100;
-			std::cout << "Волатильность заданной акции: " << variance << "%\n";
+			std::cout << "Р’РѕР»Р°С‚РёР»СЊРЅРѕСЃС‚СЊ Р·Р°РґР°РЅРЅРѕР№ Р°РєС†РёРё: " << variance << "%\n";
 			break;
 		}
 		case 5:
@@ -285,28 +285,28 @@ int portfolioAnalyzer(DataConnector& connector, PortfolioAnalyzer& analyzer) {
 
 			portfolioVolatility = analyzer.calculatePortfolioVolatility();
 
-			std::cout << "Взвешенная волатильность вашего портфеля: " << portfolioVolatility * 100 << "%\n";
+			std::cout << "Р’Р·РІРµС€РµРЅРЅР°СЏ РІРѕР»Р°С‚РёР»СЊРЅРѕСЃС‚СЊ РІР°С€РµРіРѕ РїРѕСЂС‚С„РµР»СЏ: " << portfolioVolatility * 100 << "%\n";
 			break;
 		}
 		case 6:
 		{
 			std::string stockName;
-			std::cout << "Введите имя акции, для которой нужно подсчитать доходность: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ Р°РєС†РёРё, РґР»СЏ РєРѕС‚РѕСЂРѕР№ РЅСѓР¶РЅРѕ РїРѕРґСЃС‡РёС‚Р°С‚СЊ РґРѕС…РѕРґРЅРѕСЃС‚СЊ: ";
 			std::cin >> stockName;
 
 			double assetMeanReturn;
 			assetMeanReturn = analyzer.calculateAssetReturn(stockName);
-			std::cout << "Доходность заданной акции: " << assetMeanReturn * 100 << "%\n";
+			std::cout << "Р”РѕС…РѕРґРЅРѕСЃС‚СЊ Р·Р°РґР°РЅРЅРѕР№ Р°РєС†РёРё: " << assetMeanReturn * 100 << "%\n";
 			break;
 		}
 		case 0: 
 		{
-			std::cout << "Выход из программы.\n";
+			std::cout << "Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹.\n";
 			return 0;
 		}
 		default:
 		{
-			std::cout << "Вы ввели некорректное значение, попробуйте снова.\n";
+			std::cout << "Р’С‹ РІРІРµР»Рё РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ, РїРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.\n";
 			break;
 		}
 		}
@@ -314,7 +314,7 @@ int portfolioAnalyzer(DataConnector& connector, PortfolioAnalyzer& analyzer) {
 	return 0;
 }
 
-// Моделирование Рисков
+// РњРѕРґРµР»РёСЂРѕРІР°РЅРёРµ Р РёСЃРєРѕРІ
 int riskModeler( RiskModeler& modeler, PortfolioAnalyzer&analyzer)
 {
 	while (true) {
@@ -328,57 +328,57 @@ int riskModeler( RiskModeler& modeler, PortfolioAnalyzer&analyzer)
 		case 1:
 		{
 			std::string stockName;
-			std::cout << "Введите тикер акции, для которой нужно спрогнозировать будущую цену: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ С‚РёРєРµСЂ Р°РєС†РёРё, РґР»СЏ РєРѕС‚РѕСЂРѕР№ РЅСѓР¶РЅРѕ СЃРїСЂРѕРіРЅРѕР·РёСЂРѕРІР°С‚СЊ Р±СѓРґСѓС‰СѓСЋ С†РµРЅСѓ: ";
 			std::cin >> stockName;
 
 			double futurePrice = modeler.calculateFuturePrice( stockName);
-			std::cout << "Приблизительная будущая цена актива: " << futurePrice << "$\n";
+			std::cout << "РџСЂРёР±Р»РёР·РёС‚РµР»СЊРЅР°СЏ Р±СѓРґСѓС‰Р°СЏ С†РµРЅР° Р°РєС‚РёРІР°: " << futurePrice << "$\n";
 			break;
 		}
 		case 2:
 		{
 			double portfolioRisk;
 			portfolioRisk = modeler.calculatePortfolioRisk();
-			std::cout << "Риск выбранного портфеля: " << portfolioRisk * 100 << "%\n";
+			std::cout << "Р РёСЃРє РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїРѕСЂС‚С„РµР»СЏ: " << portfolioRisk * 100 << "%\n";
 			break;
 		}
 		case 3:
 		{
 			double futurePortfolioReturn;
 			futurePortfolioReturn = modeler.calculateFuturePortfolioReturn();
-			std::cout << "Приблизительная будущая доходность ващего портфеля: " << futurePortfolioReturn << "%\n";
+			std::cout << "РџСЂРёР±Р»РёР·РёС‚РµР»СЊРЅР°СЏ Р±СѓРґСѓС‰Р°СЏ РґРѕС…РѕРґРЅРѕСЃС‚СЊ РІР°С‰РµРіРѕ РїРѕСЂС‚С„РµР»СЏ: " << futurePortfolioReturn << "%\n";
 			break;
 		}
 		case 4:
 		{
 			double trustLevel;
-			std::cout << "Введите уровень доверия(например 95): ";
+			std::cout << "Р’РІРµРґРёС‚Рµ СѓСЂРѕРІРµРЅСЊ РґРѕРІРµСЂРёСЏ(РЅР°РїСЂРёРјРµСЂ 95): ";
 			std::cin >> trustLevel;
 
 			int daysToForecast;
-			std::cout << "Введите кол-во дней на которое хотите спрогнозировать потери: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ РґРЅРµР№ РЅР° РєРѕС‚РѕСЂРѕРµ С…РѕС‚РёС‚Рµ СЃРїСЂРѕРіРЅРѕР·РёСЂРѕРІР°С‚СЊ РїРѕС‚РµСЂРё: ";
 			std::cin >> daysToForecast;
 
 			int numSmulation;
-			std::cout << "Введите кол-во симуляций(например 10000): ";
+			std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ СЃРёРјСѓР»СЏС†РёР№(РЅР°РїСЂРёРјРµСЂ 10000): ";
 			std::cin >> numSmulation;
 
 			double totalValue = analyzer.calculateTotalValue();
 
-			std::cout << "Текущая общая стоимость портфеля: " << totalValue<< "\n";
+			std::cout << "РўРµРєСѓС‰Р°СЏ РѕР±С‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ РїРѕСЂС‚С„РµР»СЏ: " << totalValue<< "\n";
 			double valueAtRisk = modeler.calculateVaR(trustLevel / 100, daysToForecast, numSmulation);
-			std::cout << "Значение VaR(сумма, которая отражает, что в " << trustLevel << "% случаях, потери не превысят эту сумму): "
+			std::cout << "Р—РЅР°С‡РµРЅРёРµ VaR(СЃСѓРјРјР°, РєРѕС‚РѕСЂР°СЏ РѕС‚СЂР°Р¶Р°РµС‚, С‡С‚Рѕ РІ " << trustLevel << "% СЃР»СѓС‡Р°СЏС…, РїРѕС‚РµСЂРё РЅРµ РїСЂРµРІС‹СЃСЏС‚ СЌС‚Сѓ СЃСѓРјРјСѓ): "
 				<< valueAtRisk << "\n";
 			break;
 		}
 		case 0:
 		{
-			std::cout << "Выход из программы.\n";
+			std::cout << "Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹.\n";
 			return 0;
 		}
 		default:
 		{
-			std::cout << "Вы ввели некорректное значение, попробуйте снова.\n";
+			std::cout << "Р’С‹ РІРІРµР»Рё РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ, РїРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.\n";
 			break;
 		}
 		}
@@ -388,7 +388,7 @@ int riskModeler( RiskModeler& modeler, PortfolioAnalyzer&analyzer)
 
 int main() {
 	setlocale(LC_ALL, "rus");
-	// создание объектов основного функционала портфеля
+	// СЃРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚РѕРІ РѕСЃРЅРѕРІРЅРѕРіРѕ С„СѓРЅРєС†РёРѕРЅР°Р»Р° РїРѕСЂС‚С„РµР»СЏ
 	AssetManager manager("portfolio.db");
 	DataConnector connector("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36");
 	DataManager dmanager(manager, connector);
@@ -423,12 +423,12 @@ int main() {
 		}
 		case 0:
 		{
-			std::cout << "Выход из программы.\n";
+			std::cout << "Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹.\n";
 			return 0;
 		}
 		default:
 		{
-			std::cout << "Вы ввели некорректное значение, попробуйте снова.\n";
+			std::cout << "Р’С‹ РІРІРµР»Рё РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ, РїРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.\n";
 			break;
 		}
 		}

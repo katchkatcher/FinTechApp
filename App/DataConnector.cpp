@@ -1,29 +1,29 @@
-#include "DataConnector.h"
+п»ї#include "DataConnector.h"
 #include <curl/curl.h>
 #include <iostream>
 #include <sstream>
 #include <ctime>
 #include <stdexcept>
-#include <thread> // Для паузы
+#include <thread> // Р”Р»СЏ РїР°СѓР·С‹
 #include <chrono>
 
-// Псевдоним для типа 
+// РџСЃРµРІРґРѕРЅРёРј РґР»СЏ С‚РёРїР° 
 using json = nlohmann::json;
 
-// Конструктор
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 DataConnector::DataConnector(const std::string& userAgent) : userAgent(userAgent) {}
 
-// Функция-обработчик ответа сервера
+// Р¤СѓРЅРєС†РёСЏ-РѕР±СЂР°Р±РѕС‚С‡РёРє РѕС‚РІРµС‚Р° СЃРµСЂРІРµСЂР°
 size_t DataConnector::WriteCallback(void* contents, size_t size, size_t nmemb, std::string* userData) {
 
-	size_t totalSize = size * nmemb;                // Получаем общий размер данных, полученных в результате запроса на сервер
+	size_t totalSize = size * nmemb;                // РџРѕР»СѓС‡Р°РµРј РѕР±С‰РёР№ СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С…, РїРѕР»СѓС‡РµРЅРЅС‹С… РІ СЂРµР·СѓР»СЊС‚Р°С‚Рµ Р·Р°РїСЂРѕСЃР° РЅР° СЃРµСЂРІРµСЂ
 
-	userData->append((char*)contents, totalSize);   // Преобразуем указатель так как записываем символы, добавляет totalSize байт из массива contents в строку userData
+	userData->append((char*)contents, totalSize);   // РџСЂРµРѕР±СЂР°Р·СѓРµРј СѓРєР°Р·Р°С‚РµР»СЊ С‚Р°Рє РєР°Рє Р·Р°РїРёСЃС‹РІР°РµРј СЃРёРјРІРѕР»С‹, РґРѕР±Р°РІР»СЏРµС‚ totalSize Р±Р°Р№С‚ РёР· РјР°СЃСЃРёРІР° contents РІ СЃС‚СЂРѕРєСѓ userData
 
 	return totalSize;
 }
 
-// Функция получения исторических данных с сайта
+// Р¤СѓРЅРєС†РёСЏ РїРѕР»СѓС‡РµРЅРёСЏ РёСЃС‚РѕСЂРёС‡РµСЃРєРёС… РґР°РЅРЅС‹С… СЃ СЃР°Р№С‚Р°
 std::vector<StockData> DataConnector::fetchHistoricalData(const std::string& symbol, const std::string& interval, const std::string& range) {
 	CURL* curl;
 	CURLcode res;
@@ -36,35 +36,35 @@ std::vector<StockData> DataConnector::fetchHistoricalData(const std::string& sym
 		throw std::runtime_error("Failed to initialize CURL.");
 	}
 
-	for (int attempt = 0; attempt < 3; ++attempt) { // Максимум 3 попытки
-		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());               // формируем url для запроса
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);   // указываем функцию обработчик запроса 
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);         // записывем в строку данные из запроса
-		curl_easy_setopt(curl, CURLOPT_USERAGENT, userAgent.c_str());   // указываем UserAgent
+	for (int attempt = 0; attempt < 3; ++attempt) { // РњР°РєСЃРёРјСѓРј 3 РїРѕРїС‹С‚РєРё
+		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());               // С„РѕСЂРјРёСЂСѓРµРј url РґР»СЏ Р·Р°РїСЂРѕСЃР°
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);   // СѓРєР°Р·С‹РІР°РµРј С„СѓРЅРєС†РёСЋ РѕР±СЂР°Р±РѕС‚С‡РёРє Р·Р°РїСЂРѕСЃР° 
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);         // Р·Р°РїРёСЃС‹РІРµРј РІ СЃС‚СЂРѕРєСѓ РґР°РЅРЅС‹Рµ РёР· Р·Р°РїСЂРѕСЃР°
+		curl_easy_setopt(curl, CURLOPT_USERAGENT, userAgent.c_str());   // СѓРєР°Р·С‹РІР°РµРј UserAgent
 
-		res = curl_easy_perform(curl);  // совершаем запрос на сервер
+		res = curl_easy_perform(curl);  // СЃРѕРІРµСЂС€Р°РµРј Р·Р°РїСЂРѕСЃ РЅР° СЃРµСЂРІРµСЂ
 		if (res != CURLE_OK) {
 			std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
 		}
 		else {
-			// Если обнаружена ошибка
+			// Р•СЃР»Рё РѕР±РЅР°СЂСѓР¶РµРЅР° РѕС€РёР±РєР°
 			long responseCode = 0;
 			curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
 
 			if (responseCode == 429) { // Too Many Requests
 				std::cerr << "429 Too Many Requests: Retrying after delay..." << std::endl;
 				std::this_thread::sleep_for(std::chrono::seconds(5));
-				continue; // Повторить запрос
+				continue; // РџРѕРІС‚РѕСЂРёС‚СЊ Р·Р°РїСЂРѕСЃ
 			}
-			else if (responseCode >= 400) { // Другие ошибки
+			else if (responseCode >= 400) { // Р”СЂСѓРіРёРµ РѕС€РёР±РєРё
 				throw std::runtime_error("Server returned error: " + std::to_string(responseCode));
 			}
 
-			break; // Успешный запрос
+			break; // РЈСЃРїРµС€РЅС‹Р№ Р·Р°РїСЂРѕСЃ
 		}
 	}
 
-	curl_easy_cleanup(curl);    // очищаем объект
+	curl_easy_cleanup(curl);    // РѕС‡РёС‰Р°РµРј РѕР±СЉРµРєС‚
 
 	if (readBuffer.empty()) {
 		throw std::runtime_error("Empty response from server.");
@@ -74,20 +74,20 @@ std::vector<StockData> DataConnector::fetchHistoricalData(const std::string& sym
 }
 
 
-// JSON Парсер
+// JSON РџР°СЂСЃРµСЂ
 std::vector<StockData> DataConnector::parseJsonData(const std::string& jsonData) {
 	std::vector<StockData> stockDataList;
 
 	try {
 		auto jsonResponse = json::parse(jsonData);
-		auto timestamps = jsonResponse["chart"]["result"][0]["timestamp"];                          // парсим временные метки
-		auto closeValues = jsonResponse["chart"]["result"][0]["indicators"]["quote"][0]["close"];   // парсим цены закрытия
+		auto timestamps = jsonResponse["chart"]["result"][0]["timestamp"];                          // РїР°СЂСЃРёРј РІСЂРµРјРµРЅРЅС‹Рµ РјРµС‚РєРё
+		auto closeValues = jsonResponse["chart"]["result"][0]["indicators"]["quote"][0]["close"];   // РїР°СЂСЃРёРј С†РµРЅС‹ Р·Р°РєСЂС‹С‚РёСЏ
 
 		for (size_t i = 0; i < timestamps.size(); i++) {
 			if (!closeValues[i].is_null()) {
 				StockData data;
-				data.timestamp = formatTimestamp(timestamps[i]);		// записываем временную метку в объект класса StockData
-				data.closeprice = closeValues[i];						// записываем цену закрытия
+				data.timestamp = formatTimestamp(timestamps[i]);		// Р·Р°РїРёСЃС‹РІР°РµРј РІСЂРµРјРµРЅРЅСѓСЋ РјРµС‚РєСѓ РІ РѕР±СЉРµРєС‚ РєР»Р°СЃСЃР° StockData
+				data.closeprice = closeValues[i];						// Р·Р°РїРёСЃС‹РІР°РµРј С†РµРЅСѓ Р·Р°РєСЂС‹С‚РёСЏ
 				stockDataList.push_back(data);
 			}
 		}
@@ -99,34 +99,34 @@ std::vector<StockData> DataConnector::parseJsonData(const std::string& jsonData)
 	return stockDataList;
 }
 
-// Функция преобразования времени
+// Р¤СѓРЅРєС†РёСЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РІСЂРµРјРµРЅРё
 std::string DataConnector::formatTimestamp(std::time_t timestamp)
 {
-	std::tm timeInfo; // Локальная структура для времени
+	std::tm timeInfo; // Р›РѕРєР°Р»СЊРЅР°СЏ СЃС‚СЂСѓРєС‚СѓСЂР° РґР»СЏ РІСЂРµРјРµРЅРё
 
-	// Безопасное преобразование временной метки в локальное время(время преобразуется из кол-ва секунд, прошедших с 01.01.1970 00:00:00 UTC)
+	// Р‘РµР·РѕРїР°СЃРЅРѕРµ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РІСЂРµРјРµРЅРЅРѕР№ РјРµС‚РєРё РІ Р»РѕРєР°Р»СЊРЅРѕРµ РІСЂРµРјСЏ(РІСЂРµРјСЏ РїСЂРµРѕР±СЂР°Р·СѓРµС‚СЃСЏ РёР· РєРѕР»-РІР° СЃРµРєСѓРЅРґ, РїСЂРѕС€РµРґС€РёС… СЃ 01.01.1970 00:00:00 UTC)
 	if (localtime_s(&timeInfo, &timestamp) != 0) {
 		throw std::runtime_error("Failed to convert timestamp to local time.");
 	}
 
-	// Форматирование даты
-	std::ostringstream oss;                                 // выходной поток для преобразования даты в строку
-	oss << std::put_time(&timeInfo, "%Y-%m-%d %H:%M:%S");   // записываем преобразованное время в буффер
-	return oss.str();                                       // преобразовываем в строку
+	// Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ РґР°С‚С‹
+	std::ostringstream oss;                                 // РІС‹С…РѕРґРЅРѕР№ РїРѕС‚РѕРє РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РґР°С‚С‹ РІ СЃС‚СЂРѕРєСѓ
+	oss << std::put_time(&timeInfo, "%Y-%m-%d %H:%M:%S");   // Р·Р°РїРёСЃС‹РІР°РµРј РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРЅРѕРµ РІСЂРµРјСЏ РІ Р±СѓС„С„РµСЂ
+	return oss.str();                                       // РїСЂРµРѕР±СЂР°Р·РѕРІС‹РІР°РµРј РІ СЃС‚СЂРѕРєСѓ
 }
 
-// Получение и отображение данных с интервалом
+// РџРѕР»СѓС‡РµРЅРёРµ Рё РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РґР°РЅРЅС‹С… СЃ РёРЅС‚РµСЂРІР°Р»РѕРј
 void DataConnector::fetchAndDisplayDataWithRetries(const std::string& symbol, const std::string& interval, const std::string& range, int retryCount)
 {
 	for (int i = 0; i < retryCount; ++i) {
 		try {
 			auto data = fetchHistoricalData(symbol, interval, range);
 
-			std::cout << "Дата              \tЦена закрытия" << std::endl;
+			std::cout << "Р”Р°С‚Р°              \tР¦РµРЅР° Р·Р°РєСЂС‹С‚РёСЏ" << std::endl;
 			for (const auto& entry : data) {
 				std::cout << entry.timestamp << "\t" << std::fixed << std::setprecision(2) << entry.closeprice << std::endl;
 			}
-			return; // Успешное выполнение
+			return; // РЈСЃРїРµС€РЅРѕРµ РІС‹РїРѕР»РЅРµРЅРёРµ
 		}
 		catch (const std::exception& e) {
 			std::cerr << "Attempt " << (i + 1) << " failed: " << e.what() << std::endl;
@@ -136,7 +136,7 @@ void DataConnector::fetchAndDisplayDataWithRetries(const std::string& symbol, co
 			}
 			else {
 				std::cerr << "All attempts failed. Exiting." << std::endl;
-				throw; // Проброс ошибки, если все попытки провалились
+				throw; // РџСЂРѕР±СЂРѕСЃ РѕС€РёР±РєРё, РµСЃР»Рё РІСЃРµ РїРѕРїС‹С‚РєРё РїСЂРѕРІР°Р»РёР»РёСЃСЊ
 			}
 		}
 	}

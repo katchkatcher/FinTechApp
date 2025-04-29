@@ -1,18 +1,18 @@
-#include "AssetManager.h"
+п»ї#include "AssetManager.h"
 #include <iostream>
 #include <sqlite3.h>
 
-// Конструктор
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 AssetManager::AssetManager(const std::string& databasePath) : dbPath(databasePath){}
 
-// Создание базы данных
+// РЎРѕР·РґР°РЅРёРµ Р±Р°Р·С‹ РґР°РЅРЅС‹С…
 bool AssetManager::createDatabase()
 {
 	sqlite3* db;
 	int exit = sqlite3_open(dbPath.c_str(), &db);
 
 	if (exit != SQLITE_OK) {
-		std::cerr << "Ошибка при создании базы данных: " << sqlite3_errmsg(db) << std::endl;
+		std::cerr << "РћС€РёР±РєР° РїСЂРё СЃРѕР·РґР°РЅРёРё Р±Р°Р·С‹ РґР°РЅРЅС‹С…: " << sqlite3_errmsg(db) << std::endl;
 		return false;
 	}
 
@@ -20,7 +20,7 @@ bool AssetManager::createDatabase()
 	return true;
 }
 
-// Создание таблицы портфелей
+// РЎРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РїРѕСЂС‚С„РµР»РµР№
 bool AssetManager::createPortfolioTable() {
     sqlite3* db;
     sqlite3_open(dbPath.c_str(), &db);
@@ -36,7 +36,7 @@ bool AssetManager::createPortfolioTable() {
     int exit = sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &errMsg);
 
     if (exit != SQLITE_OK) {
-        std::cerr << "Ошибка при создании таблицы портфелей: " << errMsg << std::endl;
+        std::cerr << "РћС€РёР±РєР° РїСЂРё СЃРѕР·РґР°РЅРёРё С‚Р°Р±Р»РёС†С‹ РїРѕСЂС‚С„РµР»РµР№: " << errMsg << std::endl;
         sqlite3_free(errMsg);
         sqlite3_close(db);
         return false;
@@ -46,7 +46,7 @@ bool AssetManager::createPortfolioTable() {
     return true;
 }
 
-// Создание таблицы акций
+// РЎРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ Р°РєС†РёР№
 bool AssetManager::createStockTable() {
     sqlite3* db;
     sqlite3_open(dbPath.c_str(), &db);
@@ -66,7 +66,7 @@ bool AssetManager::createStockTable() {
     int exit = sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &errMsg);
 
     if (exit != SQLITE_OK) {
-        std::cerr << "Ошибка при создании таблицы акций: " << errMsg << std::endl;
+        std::cerr << "РћС€РёР±РєР° РїСЂРё СЃРѕР·РґР°РЅРёРё С‚Р°Р±Р»РёС†С‹ Р°РєС†РёР№: " << errMsg << std::endl;
         sqlite3_free(errMsg);
         sqlite3_close(db);
         return false;
@@ -76,7 +76,7 @@ bool AssetManager::createStockTable() {
     return true;
 }
 
-// Добавление нового портфеля
+// Р”РѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕРіРѕ РїРѕСЂС‚С„РµР»СЏ
 bool AssetManager::addPortfolio(const std::string& portfolioName) {
     sqlite3* db;
     sqlite3_open(dbPath.c_str(), &db);
@@ -89,7 +89,7 @@ bool AssetManager::addPortfolio(const std::string& portfolioName) {
 
     int exit = sqlite3_step(stmt);
     if (exit != SQLITE_DONE) {
-        std::cerr << "Ошибка при добавлении портфеля: " << sqlite3_errmsg(db) << std::endl;
+        std::cerr << "РћС€РёР±РєР° РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РїРѕСЂС‚С„РµР»СЏ: " << sqlite3_errmsg(db) << std::endl;
         sqlite3_finalize(stmt);
         sqlite3_close(db);
         return false;
@@ -100,7 +100,7 @@ bool AssetManager::addPortfolio(const std::string& portfolioName) {
     return true;
 }
 
-// Добавление акции в портфель
+// Р”РѕР±Р°РІР»РµРЅРёРµ Р°РєС†РёРё РІ РїРѕСЂС‚С„РµР»СЊ
 bool AssetManager::addStock(int portfolioId, const std::string& ticker, double purchasePrice, int quantity) {
     sqlite3* db;
     sqlite3_open(dbPath.c_str(), &db);
@@ -120,7 +120,7 @@ bool AssetManager::addStock(int portfolioId, const std::string& ticker, double p
 
     int exit = sqlite3_step(stmt);
     if (exit != SQLITE_DONE) {
-        std::cerr << "Ошибка при добавлении акции: " << sqlite3_errmsg(db) << std::endl;
+        std::cerr << "РћС€РёР±РєР° РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё Р°РєС†РёРё: " << sqlite3_errmsg(db) << std::endl;
         sqlite3_finalize(stmt);
         sqlite3_close(db);
         return false;
@@ -131,7 +131,7 @@ bool AssetManager::addStock(int portfolioId, const std::string& ticker, double p
     return true;
 }
 
-// Получение всех портфелей
+// РџРѕР»СѓС‡РµРЅРёРµ РІСЃРµС… РїРѕСЂС‚С„РµР»РµР№
 std::vector<Portfolio> AssetManager::getPortfolios() {
     sqlite3* db;
     sqlite3_open(dbPath.c_str(), &db);
@@ -142,7 +142,7 @@ std::vector<Portfolio> AssetManager::getPortfolios() {
     std::vector<Portfolio> portfolios;
 
     if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
-        std::cerr << "Ошибка при подготовке запроса: " << sqlite3_errmsg(db) << std::endl;
+        std::cerr << "РћС€РёР±РєР° РїСЂРё РїРѕРґРіРѕС‚РѕРІРєРµ Р·Р°РїСЂРѕСЃР°: " << sqlite3_errmsg(db) << std::endl;
         sqlite3_close(db);
         return portfolios;
     }
@@ -160,7 +160,7 @@ std::vector<Portfolio> AssetManager::getPortfolios() {
     return portfolios;
 }
 
-// Получение всех акций из портфеля
+// РџРѕР»СѓС‡РµРЅРёРµ РІСЃРµС… Р°РєС†РёР№ РёР· РїРѕСЂС‚С„РµР»СЏ
 std::vector<Stock> AssetManager::getStocks(int portfolioId) {
     sqlite3* db;
     sqlite3_open(dbPath.c_str(), &db);
@@ -176,7 +176,7 @@ std::vector<Stock> AssetManager::getStocks(int portfolioId) {
     std::vector<Stock> stocks;
 
     if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
-        std::cerr << "Ошибка при подготовке запроса: " << sqlite3_errmsg(db) << std::endl;
+        std::cerr << "РћС€РёР±РєР° РїСЂРё РїРѕРґРіРѕС‚РѕРІРєРµ Р·Р°РїСЂРѕСЃР°: " << sqlite3_errmsg(db) << std::endl;
         sqlite3_close(db);
         return stocks;
     }
@@ -198,112 +198,112 @@ std::vector<Stock> AssetManager::getStocks(int portfolioId) {
     return stocks;
 }
 
-// Отображенние портфелей
+// РћС‚РѕР±СЂР°Р¶РµРЅРЅРёРµ РїРѕСЂС‚С„РµР»РµР№
 void AssetManager::displayPortfolios(const std::vector<Portfolio>& portfolios){
-    std::cout << "Список портфелей:\n";
+    std::cout << "РЎРїРёСЃРѕРє РїРѕСЂС‚С„РµР»РµР№:\n";
     for (const auto& portfolio : portfolios) {
-        std::cout << "ID: " << portfolio.id << ", Название: " << portfolio.name << '\n';
+        std::cout << "ID: " << portfolio.id << ", РќР°Р·РІР°РЅРёРµ: " << portfolio.name << '\n';
     }
 }
 
-// Отображение активов
+// РћС‚РѕР±СЂР°Р¶РµРЅРёРµ Р°РєС‚РёРІРѕРІ
 void AssetManager::displayStocks(const std::vector<Stock>& stocks){
-    std::cout << "Список акций:\n";
+    std::cout << "РЎРїРёСЃРѕРє Р°РєС†РёР№:\n";
     for (const auto& stock : stocks) {
-        std::cout << "ID: " << stock.id << ", Тикер: " << stock.ticker
-            << ", Цена: " << stock.purchasePrice
-            << ", Количество: " << stock.quantity << '\n';
+        std::cout << "ID: " << stock.id << ", РўРёРєРµСЂ: " << stock.ticker
+            << ", Р¦РµРЅР°: " << stock.purchasePrice
+            << ", РљРѕР»РёС‡РµСЃС‚РІРѕ: " << stock.quantity << '\n';
     }
 }
 
-// Удаление актива по имени
+// РЈРґР°Р»РµРЅРёРµ Р°РєС‚РёРІР° РїРѕ РёРјРµРЅРё
 bool AssetManager::deleteAssetByName(int portfolioId, const std::string& stockName)
 {
     sqlite3* db;
     char* errMsg = nullptr;
 
-    // Открываем базу данных
+    // РћС‚РєСЂС‹РІР°РµРј Р±Р°Р·Сѓ РґР°РЅРЅС‹С…
     int rc = sqlite3_open(dbPath.c_str(), & db);
     if (rc) {
-        std::cerr << "Ошибка открытия базы данных: " << sqlite3_errmsg(db) << std::endl;
+        std::cerr << "РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ Р±Р°Р·С‹ РґР°РЅРЅС‹С…: " << sqlite3_errmsg(db) << std::endl;
         return false;
     }
 
-    // Подготавливаем SQL-запрос для удаления акции
+    // РџРѕРґРіРѕС‚Р°РІР»РёРІР°РµРј SQL-Р·Р°РїСЂРѕСЃ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ Р°РєС†РёРё
     std::string sql = "DELETE FROM stocks WHERE portfolio_id = ? AND ticker = ?;";
 
-    // Подготавливаем SQL-запрос
+    // РџРѕРґРіРѕС‚Р°РІР»РёРІР°РµРј SQL-Р·Р°РїСЂРѕСЃ
     sqlite3_stmt* stmt;
     rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr);
     if (rc != SQLITE_OK) {
-        std::cerr << "Ошибка подготовки запроса: " << sqlite3_errmsg(db) << std::endl;
+        std::cerr << "РћС€РёР±РєР° РїРѕРґРіРѕС‚РѕРІРєРё Р·Р°РїСЂРѕСЃР°: " << sqlite3_errmsg(db) << std::endl;
         sqlite3_close(db);
         return false;
     }
 
-    // Привязываем параметры к запросу
-    sqlite3_bind_int(stmt, 1, portfolioId);          // Привязываем portfolio_id
-    sqlite3_bind_text(stmt, 2, stockName.c_str(), -1, SQLITE_STATIC); // Привязываем stock_name
+    // РџСЂРёРІСЏР·С‹РІР°РµРј РїР°СЂР°РјРµС‚СЂС‹ Рє Р·Р°РїСЂРѕСЃСѓ
+    sqlite3_bind_int(stmt, 1, portfolioId);          // РџСЂРёРІСЏР·С‹РІР°РµРј portfolio_id
+    sqlite3_bind_text(stmt, 2, stockName.c_str(), -1, SQLITE_STATIC); // РџСЂРёРІСЏР·С‹РІР°РµРј stock_name
 
-    // Выполняем запрос
+    // Р’С‹РїРѕР»РЅСЏРµРј Р·Р°РїСЂРѕСЃ
     rc = sqlite3_step(stmt);
     if (rc != SQLITE_DONE) {
-        std::cerr << "Ошибка выполнения запроса: " << sqlite3_errmsg(db) << std::endl;
+        std::cerr << "РћС€РёР±РєР° РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РїСЂРѕСЃР°: " << sqlite3_errmsg(db) << std::endl;
         sqlite3_finalize(stmt);
         sqlite3_close(db);
         return false;
     }
 
-    // Освобождаем ресурсы
+    // РћСЃРІРѕР±РѕР¶РґР°РµРј СЂРµСЃСѓСЂСЃС‹
     sqlite3_finalize(stmt);
     sqlite3_close(db);
 
-    std::cout << "Акция '" << stockName << "' успешно удалена из портфеля с ID " << portfolioId << "." << std::endl;
+    std::cout << "РђРєС†РёСЏ '" << stockName << "' СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅР° РёР· РїРѕСЂС‚С„РµР»СЏ СЃ ID " << portfolioId << "." << std::endl;
     return true;
 }
 
-// Функция переиндексации активов портфеля
+// Р¤СѓРЅРєС†РёСЏ РїРµСЂРµРёРЅРґРµРєСЃР°С†РёРё Р°РєС‚РёРІРѕРІ РїРѕСЂС‚С„РµР»СЏ
 bool AssetManager::reindexStocks() {
     sqlite3* db;
     int rc = sqlite3_open(dbPath.c_str(), &db);
     if (rc) {
-        std::cerr << "Ошибка открытия базы данных: " << sqlite3_errmsg(db) << std::endl;
+        std::cerr << "РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ Р±Р°Р·С‹ РґР°РЅРЅС‹С…: " << sqlite3_errmsg(db) << std::endl;
         return false;
     }
 
     char* errMsg = nullptr;
 
-    // Создаём временную таблицу без id
+    // РЎРѕР·РґР°С‘Рј РІСЂРµРјРµРЅРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ Р±РµР· id
     const char* createTempTableSQL = R"(
         CREATE TEMPORARY TABLE temp_stocks AS 
         SELECT portfolio_id, ticker, purchase_price, quantity FROM stocks;
     )";
     rc = sqlite3_exec(db, createTempTableSQL, nullptr, nullptr, &errMsg);
     if (rc != SQLITE_OK) {
-        std::cerr << "Ошибка создания временной таблицы: " << errMsg << std::endl;
+        std::cerr << "РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ РІСЂРµРјРµРЅРЅРѕР№ С‚Р°Р±Р»РёС†С‹: " << errMsg << std::endl;
         sqlite3_free(errMsg);
         sqlite3_close(db);
         return false;
     }
 
-    // Очищаем основную таблицу и сбрасываем автоинкремент
+    // РћС‡РёС‰Р°РµРј РѕСЃРЅРѕРІРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ Рё СЃР±СЂР°СЃС‹РІР°РµРј Р°РІС‚РѕРёРЅРєСЂРµРјРµРЅС‚
     const char* clearTableSQL = "DELETE FROM stocks; DELETE FROM sqlite_sequence WHERE name='stocks';";
     rc = sqlite3_exec(db, clearTableSQL, nullptr, nullptr, &errMsg);
     if (rc != SQLITE_OK) {
-        std::cerr << "Ошибка очистки таблицы: " << errMsg << std::endl;
+        std::cerr << "РћС€РёР±РєР° РѕС‡РёСЃС‚РєРё С‚Р°Р±Р»РёС†С‹: " << errMsg << std::endl;
         sqlite3_free(errMsg);
         sqlite3_close(db);
         return false;
     }
 
-    // Вставляем данные обратно с автоинкрементом
+    // Р’СЃС‚Р°РІР»СЏРµРј РґР°РЅРЅС‹Рµ РѕР±СЂР°С‚РЅРѕ СЃ Р°РІС‚РѕРёРЅРєСЂРµРјРµРЅС‚РѕРј
     const char* insertDataSQL = R"(
         INSERT INTO stocks (portfolio_id, ticker, purchase_price, quantity) 
         SELECT portfolio_id, ticker, purchase_price, quantity FROM temp_stocks;
     )";
     rc = sqlite3_exec(db, insertDataSQL, nullptr, nullptr, &errMsg);
     if (rc != SQLITE_OK) {
-        std::cerr << "Ошибка восстановления данных: " << errMsg << std::endl;
+        std::cerr << "РћС€РёР±РєР° РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РґР°РЅРЅС‹С…: " << errMsg << std::endl;
         sqlite3_free(errMsg);
         sqlite3_close(db);
         return false;
@@ -313,59 +313,59 @@ bool AssetManager::reindexStocks() {
     return true;
 }
 
-// Удаление базы данных
+// РЈРґР°Р»РµРЅРёРµ Р±Р°Р·С‹ РґР°РЅРЅС‹С…
 bool AssetManager::deleteDatabase()
 {
-    // Открываем базу данных
+    // РћС‚РєСЂС‹РІР°РµРј Р±Р°Р·Сѓ РґР°РЅРЅС‹С…
     sqlite3* db;
     int rc = sqlite3_open(dbPath.c_str(), &db);
     if (rc) {
-        std::cerr << "Ошибка при открытии базы данных: " << sqlite3_errmsg(db) << std::endl;
+        std::cerr << "РћС€РёР±РєР° РїСЂРё РѕС‚РєСЂС‹С‚РёРё Р±Р°Р·С‹ РґР°РЅРЅС‹С…: " << sqlite3_errmsg(db) << std::endl;
         return false;
     }
 
-    // Удаляем все записи из таблицы Stocks
+    // РЈРґР°Р»СЏРµРј РІСЃРµ Р·Р°РїРёСЃРё РёР· С‚Р°Р±Р»РёС†С‹ Stocks
     const char* deleteStocksSQL = "DELETE FROM Stocks;";
     char* errMsg = nullptr;
     rc = sqlite3_exec(db, deleteStocksSQL, nullptr, nullptr, &errMsg);
     if (rc != SQLITE_OK) {
-        std::cerr << "Ошибка при удалении акций: " << errMsg << std::endl;
+        std::cerr << "РћС€РёР±РєР° РїСЂРё СѓРґР°Р»РµРЅРёРё Р°РєС†РёР№: " << errMsg << std::endl;
         sqlite3_free(errMsg);
         sqlite3_close(db);
         return false;
     }
 
-    // Удаляем все записи из таблицы Portfolios
+    // РЈРґР°Р»СЏРµРј РІСЃРµ Р·Р°РїРёСЃРё РёР· С‚Р°Р±Р»РёС†С‹ Portfolios
     const char* deletePortfoliosSQL = "DELETE FROM Portfolios;";
     rc = sqlite3_exec(db, deletePortfoliosSQL, nullptr, nullptr, &errMsg);
     if (rc != SQLITE_OK) {
-        std::cerr << "Ошибка при удалении портфелей: " << errMsg << std::endl;
+        std::cerr << "РћС€РёР±РєР° РїСЂРё СѓРґР°Р»РµРЅРёРё РїРѕСЂС‚С„РµР»РµР№: " << errMsg << std::endl;
         sqlite3_free(errMsg);
         sqlite3_close(db);
         return false;
     }
 
-    // Очищаем последовательности автоинкремента для обеих таблиц
+    // РћС‡РёС‰Р°РµРј РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё Р°РІС‚РѕРёРЅРєСЂРµРјРµРЅС‚Р° РґР»СЏ РѕР±РµРёС… С‚Р°Р±Р»РёС†
     const char* resetSequenceSQL = "DELETE FROM sqlite_sequence WHERE name='Stocks'; DELETE FROM sqlite_sequence WHERE name='Portfolios';";
     rc = sqlite3_exec(db, resetSequenceSQL, nullptr, nullptr, &errMsg);
     if (rc != SQLITE_OK) {
-        std::cerr << "Ошибка при сбросе автоинкремента: " << errMsg << std::endl;
+        std::cerr << "РћС€РёР±РєР° РїСЂРё СЃР±СЂРѕСЃРµ Р°РІС‚РѕРёРЅРєСЂРµРјРµРЅС‚Р°: " << errMsg << std::endl;
         sqlite3_free(errMsg);
         sqlite3_close(db);
         return false;
     }
 
-    // Закрываем соединение с базой данных
+    // Р—Р°РєСЂС‹РІР°РµРј СЃРѕРµРґРёРЅРµРЅРёРµ СЃ Р±Р°Р·РѕР№ РґР°РЅРЅС‹С…
     sqlite3_close(db);
 
-    // Удаляем сам файл базы данных (предположим, что база данных на диске)
+    // РЈРґР°Р»СЏРµРј СЃР°Рј С„Р°Р№Р» Р±Р°Р·С‹ РґР°РЅРЅС‹С… (РїСЂРµРґРїРѕР»РѕР¶РёРј, С‡С‚Рѕ Р±Р°Р·Р° РґР°РЅРЅС‹С… РЅР° РґРёСЃРєРµ)
     if (remove(dbPath.c_str()) != 0) {
         char buffer[1024];
         strerror_s(buffer, sizeof(buffer), errno);
-        std::cerr << "Ошибка: " << buffer << std::endl;
+        std::cerr << "РћС€РёР±РєР°: " << buffer << std::endl;
         return false;
     }
 
-    std::cout << "База данных и все портфели успешно удалены." << std::endl;
+    std::cout << "Р‘Р°Р·Р° РґР°РЅРЅС‹С… Рё РІСЃРµ РїРѕСЂС‚С„РµР»Рё СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅС‹." << std::endl;
     return true;
 }

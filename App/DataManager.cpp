@@ -1,34 +1,34 @@
-#include "DataManager.h"
+п»ї#include "DataManager.h"
 
 DataManager::DataManager(AssetManager& manager, DataConnector& connector) : assetManager(manager), dataConnector(connector) {
 }
 
-// Выбор портфеля для анализа 
+// Р’С‹Р±РѕСЂ РїРѕСЂС‚С„РµР»СЏ РґР»СЏ Р°РЅР°Р»РёР·Р° 
 void DataManager::choosePortfolio()
 {
     allPortfolios = assetManager.getPortfolios();
 
     assetManager.displayPortfolios(allPortfolios);
 
-    std::cout << "Выберите портфель для анализа: ";
+    std::cout << "Р’С‹Р±РµСЂРёС‚Рµ РїРѕСЂС‚С„РµР»СЊ РґР»СЏ Р°РЅР°Р»РёР·Р°: ";
     int portfolioId;
     std::cin >> portfolioId;
 
     allStocks = assetManager.getStocks(portfolioId);
 
-    std::cout << "Список акций в выбранном портфеле:\n";
+    std::cout << "РЎРїРёСЃРѕРє Р°РєС†РёР№ РІ РІС‹Р±СЂР°РЅРЅРѕРј РїРѕСЂС‚С„РµР»Рµ:\n";
     assetManager.displayStocks(allStocks);
 
     for (const auto& stock : allStocks) {
-        // Получаем исторические данные только один раз
+        // РџРѕР»СѓС‡Р°РµРј РёСЃС‚РѕСЂРёС‡РµСЃРєРёРµ РґР°РЅРЅС‹Рµ С‚РѕР»СЊРєРѕ РѕРґРёРЅ СЂР°Р·
         std::vector<StockData> stockData = dataConnector.fetchHistoricalData(stock.ticker, "1d", "1y");
-        if (stockData.empty()) continue; // Пропуск, если данных нет
+        if (stockData.empty()) continue; // РџСЂРѕРїСѓСЃРє, РµСЃР»Рё РґР°РЅРЅС‹С… РЅРµС‚
 
-        // Сохраняем текущую цену как последнюю в списке
+        // РЎРѕС…СЂР°РЅСЏРµРј С‚РµРєСѓС‰СѓСЋ С†РµРЅСѓ РєР°Рє РїРѕСЃР»РµРґРЅСЋСЋ РІ СЃРїРёСЃРєРµ
         double currentPrice = stockData.back().closeprice;
         currentPrices[stock.ticker] = currentPrice;
 
-        // Сохраняем исторические цены
+        // РЎРѕС…СЂР°РЅСЏРµРј РёСЃС‚РѕСЂРёС‡РµСЃРєРёРµ С†РµРЅС‹
         std::vector<double> closePrices;
         closePrices.reserve(stockData.size());
         for (const auto& data : stockData) {
@@ -38,25 +38,25 @@ void DataManager::choosePortfolio()
     }
 }
 
-// Получение портфелей
+// РџРѕР»СѓС‡РµРЅРёРµ РїРѕСЂС‚С„РµР»РµР№
 const std::vector<Portfolio>& DataManager::getAllPortfolios()
 {
 	return allPortfolios;
 }
 
-// Получение акций
+// РџРѕР»СѓС‡РµРЅРёРµ Р°РєС†РёР№
 const std::vector<Stock>& DataManager::getAllStocks()
 {
 	return allStocks;
 }
 
-// Получение текущих цен
+// РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РёС… С†РµРЅ
 const std::map<std::string, double>& DataManager::getCurrentPrices()
 {
 	return currentPrices;
 }
 
-// Получение исторических цен активов портфеля
+// РџРѕР»СѓС‡РµРЅРёРµ РёСЃС‚РѕСЂРёС‡РµСЃРєРёС… С†РµРЅ Р°РєС‚РёРІРѕРІ РїРѕСЂС‚С„РµР»СЏ
 const std::map<std::string, std::vector<double>>& DataManager::getHistoricalPrices()
 {
 	return historicalPrices;
