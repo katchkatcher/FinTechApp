@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>AssetManager</Filter>
+    </ClCompile>
+    <ClCompile Include="PortfolioAnalyzer.cpp">
+      <Filter>PortfolioAnalyzer</Filter>
+    </ClCompile>
+    <ClCompile Include="RiskModeler.cpp">
+      <Filter>RiskModeler</Filter>
+    </ClCompile>
+    <ClCompile Include="DataConnector.cpp">
+      <Filter>DataConnector</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager.cpp">
+      <Filter>PortfolioDataMamager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="AssetManager">
+      <UniqueIdentifier>{10c42f31-a255-4449-b15b-d6839258c946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PortfolioAnalyzer">
+      <UniqueIdentifier>{59fb46b6-c905-4e7e-8f02-cdbe7423a973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RiskModeler">
+      <UniqueIdentifier>{ea8857f1-53c1-4e3b-89e2-d1b22b815132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataConnector">
+      <UniqueIdentifier>{633522ae-1ef9-493d-a05e-9079b0316f64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PortfolioDataMamager">
+      <UniqueIdentifier>{3bfdb6e9-24d2-4e75-becd-30f8e3fa0a18}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AssetManager.h">
+      <Filter>AssetManager</Filter>
+    </ClInclude>
+    <ClInclude Include="PortfolioAnalyzer.h">
+      <Filter>PortfolioAnalyzer</Filter>
+    </ClInclude>
+    <ClInclude Include="RiskModeler.h">
+      <Filter>RiskModeler</Filter>
+    </ClInclude>
+    <ClInclude Include="DataConnector.h">
+      <Filter>DataConnector</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager.h">
+      <Filter>PortfolioDataMamager</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
